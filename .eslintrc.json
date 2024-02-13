@@ -1,0 +1,84 @@
+{
+  "extends": "airbnb",
+
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+
+  "env": {
+    "jest": true
+  },
+
+  "rules": {
+    "no-console": "error",
+
+    // [OVERRIDDEN] Increase min properties for line breaks in objects
+    // https://eslint.org/docs/rules/object-curly-newline
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "minProperties": 6,
+          "multiline": true,
+          "consistent": true
+        },
+        "ObjectPattern": {
+          "minProperties": 6,
+          "multiline": true,
+          "consistent": true
+        },
+        "ImportDeclaration": {
+          "minProperties": 4,
+          "multiline": true,
+          "consistent": true
+        },
+        "ExportDeclaration": {
+          "minProperties": 4,
+          "multiline": true,
+          "consistent": true
+        }
+      }
+    ],
+
+    // [OVERRIDDEN] Increase max length to 120
+    // https://eslint.org/docs/rules/max-len
+    "max-len": [
+      "error",
+      120,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
+    ],
+
+    // [OVERRIDDEN] Allow exporting single non-default export
+    // Require modules with a single export to use a default export
+    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md
+    "import/prefer-default-export": "off",
+
+    // [OVERRIDDEN] Enforce parens for arrow functions only when there are more than 1 arguments
+    // Require parens in arrow functions arguments
+    // https://eslint.org/docs/rules/arrow-parens.html
+    "arrow-parens": ["error", "as-needed"],
+
+    // [CUSTOM] Enforce the usage of curly braces in all blocks, even if it is a one line body
+    // https://eslint.org/docs/rules/curly
+    "curly": ["error", "all"],
+
+    // [OVERRIDDEN] Restore old behavior of airbnb
+    // Allow 2 blank lines at most, no blank line at the begin/end of files
+    // https://eslint.org/docs/rules/no-multiple-empty-lines
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 2, "maxEOF": 0, "maxBOF": 0 }
+    ],
+
+    // [OVERRIDDEN] All imports must include .js to be able to resolved
+    "import/extensions": ["error", "always"]
+  }
+}
