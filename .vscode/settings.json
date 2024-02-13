@@ -1,0 +1,11 @@
+{
+  "files.eol": "\n",
+  "cSpell.words": ["hstore", "parens"],
+  "eslint.enable": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+}
