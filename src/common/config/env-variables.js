@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import { config as extractEnvironmentVariables } from 'dotenv';
+
+extractEnvironmentVariables();
 
 export const config = {
   PORT: process.env.PORT,
