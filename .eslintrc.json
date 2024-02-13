@@ -10,6 +10,9 @@
     "jest": true
   },
 
+  // Ignore node_modules folder in linting
+  "ignorePatterns": ["./node_modules"],
+
   "rules": {
     "no-console": "error",
 
@@ -79,9 +82,6 @@
     ],
 
     // [OVERRIDDEN] All imports must include .js to be able to resolved
-    "import/extensions": ["error", "always"],
-
-    // Ignore node_modules folder in linting
-    "ignorePatterns": ["node_modules/"]
+    "import/extensions": ["error", "always"]
   }
 }
