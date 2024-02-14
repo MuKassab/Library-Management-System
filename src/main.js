@@ -1,24 +1,17 @@
-import http from 'http';
-import _ from 'lodash';
-
-import app from './app.js';
+import sequelize from './db.js';
 import { config } from './common/config/index.js';
+import { initHttpServer } from './server.js';
 
-// Create and run start server
-const server = http.createServer(app);
-server.listen(config.PORT);
+// Start server only when database is working as expected
+sequelize.authenticate().then(async () => {
+  // create missing tables in database if any
+  await sequelize.sync();
 
-// Log if server fails.
-// eslint-disable-next-line no-console
-server.on('error', err => console.error('Error on starting server', err));
-
-// Log when server starts listening or when it fails to listen.
-server.on('listening', err => {
-  if (_.isNil(err)) {
-    // eslint-disable-next-line no-console
-    console.info(`Server started on port ${config.PORT}`);
-  } else {
-    // eslint-disable-next-line no-console
-    console.error('Error on trying to listen on port', err);
-  }
+  // Initialize and run server
+  const server = initHttpServer();
+  server.listen(config.PORT);
+}).catch(err => {
+  // eslint-disable-next-line no-console
+  console.log('Failed to authenticate connection with database', err);
+  throw err;
 });
