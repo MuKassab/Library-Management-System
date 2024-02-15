@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { EMAIL_REGEX, PASSWORD_REGEX, NAME_REGEX } from '../../common/constants/index.js';
+import { PaginationLimitSchema, PaginationSkipSchema } from '../../common/validation/index.js';
 
 export const UsersValidation = {
   registerUser: {
@@ -46,6 +47,23 @@ export const UsersValidation = {
   deleteUser: {
     params: {
       id: Joi.number().integer().min(1).required(),
+    },
+  },
+
+  getUser: {
+    params: {
+      id: Joi.number().integer().min(1).required(),
+    },
+  },
+
+  listUsers: {
+    query: {
+      limit: PaginationLimitSchema,
+      skip: PaginationSkipSchema,
+
+      // TODO: Add boolean to select user that have books borrowed now
+
+      // TODO: Add fuzzy search
     },
   },
 };
