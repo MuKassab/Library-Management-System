@@ -6,7 +6,7 @@ import { config } from './common/config/index.js';
 
 /**
  * Initialize http server using express() this provides access to the server itself as express hides it
- * The returned instance can be used with sockets connection as well
+ * The returned instance can be used with sockets connection as well but must be stored to constant first
  *
  * @returns {http.Server}
  */
