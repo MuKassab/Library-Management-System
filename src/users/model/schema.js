@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { USER_TYPE_CUSTOMER, USER_TYPE_STAFF } from '../constants/states.js';
+import { EMAIL_REGEX, NAME_REGEX } from '../../common/constants/regex-patterns.js';
 
 export const UsersSchema = {
   id: {
@@ -11,8 +12,10 @@ export const UsersSchema = {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    isAlpha: true,
-    notEmpty: true,
+    validate: {
+      is: NAME_REGEX,
+      len: [3, 50],
+    },
   },
 
   email: {
@@ -20,7 +23,7 @@ export const UsersSchema = {
     allowNull: false,
     unique: true, // Ensure uniqueness
     validate: {
-      isEmail: true, // Validate email format
+      is: EMAIL_REGEX,
     },
   },
 
