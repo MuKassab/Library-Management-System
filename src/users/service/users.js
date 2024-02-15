@@ -161,6 +161,7 @@ export const UsersService = {
       limit,
       offset: skip,
       attributes: { exclude: ['password'] },
+      // sort the users by id as there db does not select data in the same order evertime
       order: [['id', 'ASC']],
     });
 
