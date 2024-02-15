@@ -12,4 +12,10 @@ router.post(
   UsersController.registerUser,
 );
 
+router.patch(
+  '/:id',
+  validate(UsersValidation.updateUser),
+  UsersController.updateUser,
+);
+
 export default router;
