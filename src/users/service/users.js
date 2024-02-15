@@ -3,11 +3,11 @@ import httpStatus from 'http-status';
 
 import Users from '../model/index.js';
 import { CustomAPIError } from '../../common/lib/index.js';
-import { EMAIL_IS_USED } from '../../common/constants/error-codes.js';
+import { EMAIL_IS_USED, USER_NOT_FOUND } from '../../common/constants/index.js';
 import { hashData } from '../../common/utils/index.js';
 import { USER_TYPE_CUSTOMER } from '../constants/states.js';
 
-const { UNPROCESSABLE_ENTITY } = httpStatus;
+const { UNPROCESSABLE_ENTITY, NOT_FOUND } = httpStatus;
 
 export const UsersService = {
   /**
@@ -49,5 +49,52 @@ export const UsersService = {
     delete user.password;
 
     return user;
+  },
+
+  /**
+   * Updates user data given his id
+   *
+   * @param {Object} args
+   * @param {Number} [args.id]
+   * @param {String} [args.name]
+   * @param {String} [args.password]
+   * @param {String} [args.email]
+   *
+   * @returns {Promise<{Object}>} {user: {...user}}
+   */
+  async updateUser({ userId, name, password, email }) {
+    // validate no user exits with the same email before
+    const userExists = await Users.findOne(userId, { attributes: ['id'] });
+
+    if (_.isNil(userExists)) {
+      throw new CustomAPIError({
+        message: 'User does not exist.',
+        status: NOT_FOUND,
+        errorCode: USER_NOT_FOUND,
+      });
+    }
+
+    const updateObject = {};
+
+    if (!_.isNil(name)) {
+      updateObject.name = name;
+    }
+
+    if (!_.isNil(email)) {
+      updateObject.email = email;
+    }
+
+    if (!_.isNil(password)) {
+      const hashedPassword = await hashData({ data: password });
+      updateObject.password = hashedPassword;
+    }
+
+    // update user based on the given params
+    await Users.update(updateObject, { where: { id: userId } });
+
+    // This promise must be done after the update to get the updated user row
+    const user = await Users.findByPk(userId, { attributes: { exclude: ['password'] } });
+
+    return user.toJSON();
   },
 };
