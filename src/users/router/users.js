@@ -18,4 +18,10 @@ router.patch(
   UsersController.updateUser,
 );
 
+router.delete(
+  '/:id',
+  validate(UsersValidation.deleteUser),
+  UsersController.deleteUser,
+);
+
 export default router;
