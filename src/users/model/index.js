@@ -1,6 +1,6 @@
+import { sequelize } from '../../common/database/db.js';
 import { USERS_MODEL_NAME, USERS_TABLE_NAME } from './constants.js';
 import { UsersSchema } from './schema.js';
-import sequelize from '../../db.js';
 
 const Users = sequelize.define(
   USERS_MODEL_NAME,
