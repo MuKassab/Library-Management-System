@@ -81,6 +81,20 @@ export const UsersService = {
     }
 
     if (!_.isNil(email)) {
+      // validate no user exits with the same email before
+      const userWithSameEmail = await Users.findOne({
+        where: { email },
+        attributes: ['id'],
+      });
+
+      if (!_.isNil(userWithSameEmail)) {
+        throw new CustomAPIError({
+          message: 'E-mail is already used.',
+          status: UNPROCESSABLE_ENTITY,
+          errorCode: EMAIL_IS_USED,
+        });
+      }
+
       updateObject.email = email;
     }
 
@@ -154,14 +168,14 @@ export const UsersService = {
    * @param {Number} [args.limit]
    * @param {Number} [args.skip]
    *
-   * @returns {Promise<{[Object]}>} {users: [{...userData}], totalCount}
+   * @returns {Promise<{[Object]}>} {users: [{...userData}], count}
    */
   async listUsers({ limit, skip }) {
     const { count, rows: users } = await Users.findAndCountAll({
       limit,
       offset: skip,
       attributes: { exclude: ['password'] },
-      // sort the users by id as there db does not select data in the same order evertime
+      // sort the users by id as there db does not select data in the same order every time
       order: [['id', 'ASC']],
     });
 
