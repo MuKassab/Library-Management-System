@@ -42,4 +42,10 @@ export const UsersValidation = {
         .pattern(EMAIL_REGEX),
     },
   },
+
+  deleteUser: {
+    params: {
+      id: Joi.number().integer().min(1).required(),
+    },
+  },
 };
