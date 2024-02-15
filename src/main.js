@@ -1,5 +1,5 @@
-import sequelize from './db.js';
 import { config } from './common/config/index.js';
+import { sequelize } from './common/database/index.js';
 import { initHttpServer } from './server.js';
 
 // Start server only when database is working as expected
