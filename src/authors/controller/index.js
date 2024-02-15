@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import { AuthorsService } from '../service/authors.js';
+import { AuthorsService } from '../service/index.js';
 
 const { CREATED, OK, NO_CONTENT } = httpStatus;
 
