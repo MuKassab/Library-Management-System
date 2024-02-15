@@ -7,4 +7,6 @@ export const config = {
 
   POSTGRES_URI: process.env.POSTGRES_URI,
   REDIS_URI: process.env.REDIS_URI,
+
+  HASH_PEPPER: process.env.HASH_PEPPER,
 };
