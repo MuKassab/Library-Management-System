@@ -24,4 +24,16 @@ router.delete(
   UsersController.deleteUser,
 );
 
+router.get(
+  '/:id',
+  validate(UsersValidation.getUser),
+  UsersController.getUser,
+);
+
+router.get(
+  '/',
+  validate(UsersValidation.listUsers),
+  UsersController.listUsers,
+);
+
 export default router;

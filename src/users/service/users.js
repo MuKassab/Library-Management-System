@@ -123,4 +123,49 @@ export const UsersService = {
     // TODO: should be removed (VIA on delete cascade index)
     await Users.destroy({ where: { id: userId } });
   },
+
+  /**
+   * Gets a user by his id
+   *
+   * @param {Object} args
+   * @param {Number} [args.userId]
+   *
+   * @returns {Promise<{Object}>} {user: {...userData}}
+   */
+  async getUser({ userId }) {
+    // validate no user exits with the same email before
+    const user = await Users.findByPk(userId, { attributes: { exclude: ['password'] } });
+
+    if (_.isNil(user)) {
+      throw new CustomAPIError({
+        message: 'User does not exist.',
+        status: NOT_FOUND,
+        errorCode: USER_NOT_FOUND,
+      });
+    }
+
+    return user;
+  },
+
+  /**
+   * Lists users in the system
+   *
+   * @param {Object} args
+   * @param {Number} [args.limit]
+   * @param {Number} [args.skip]
+   *
+   * @returns {Promise<{[Object]}>} {users: [{...userData}], totalCount}
+   */
+  async listUsers({ limit, skip }) {
+    const { count, rows: users } = await Users.findAndCountAll({
+      limit,
+      offset: skip,
+      attributes: { exclude: ['password'] },
+      // sort the users by id as there db does not select data in the same order evertime
+      order: [['id', 'ASC']],
+    });
+
+
+    return { users, count };
+  },
 };

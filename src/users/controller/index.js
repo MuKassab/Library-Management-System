@@ -42,4 +42,28 @@ export const UsersController = {
       return next(err);
     }
   },
+
+  async getUser(req, res, next) {
+    try {
+      const { params: { id: userId } } = req;
+
+      const user = await UsersService.getUser({ userId });
+
+      return res.status(OK).json({ user });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async listUsers(req, res, next) {
+    try {
+      const { query } = req;
+
+      const data = await UsersService.listUsers({ ...query });
+
+      return res.status(OK).json(data);
+    } catch (err) {
+      return next(err);
+    }
+  },
 };
