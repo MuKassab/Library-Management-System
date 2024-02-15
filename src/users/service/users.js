@@ -64,7 +64,7 @@ export const UsersService = {
    */
   async updateUser({ userId, name, password, email }) {
     // validate no user exits with the same email before
-    const userExists = await Users.findOne(userId, { attributes: ['id'] });
+    const userExists = await Users.findByPk(userId, { attributes: ['id'] });
 
     if (_.isNil(userExists)) {
       throw new CustomAPIError({
