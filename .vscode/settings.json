@@ -1,6 +1,13 @@
 {
   "files.eol": "\n",
-  "cSpell.words": ["DATEONLY", "hstore", "parens", "subquery", "trgm"],
+  "cSpell.words": [
+    "DATEONLY",
+    "hstore",
+    "openapi",
+    "parens",
+    "subquery",
+    "trgm"
+  ],
   "eslint.enable": true,
   "editor.tabSize": 2,
   "editor.formatOnSave": true,

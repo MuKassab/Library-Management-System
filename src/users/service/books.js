@@ -74,7 +74,7 @@ export const UserBooksService = {
     if (!_.isNil(userHasBorrowedBook)) {
       throw new CustomAPIError({
         message: 'User already has the book',
-        status: NOT_FOUND,
+        status: UNPROCESSABLE_ENTITY,
         errorCode: USER_HAS_BOOK,
       });
     }

@@ -1,11 +1,14 @@
 import _ from 'lodash';
 import httpStatus from 'http-status';
 
+import { Op } from 'sequelize';
 import Users from '../model/index.js';
 import { CustomAPIError } from '../../common/lib/index.js';
-import { EMAIL_IS_USED, USER_NOT_FOUND } from '../../common/constants/index.js';
+import { EMAIL_IS_USED, USER_HAS_BOOK, USER_NOT_FOUND } from '../../common/constants/index.js';
 import { hashData } from '../../common/utils/index.js';
 import { USER_TYPE_CUSTOMER } from '../constants/states.js';
+import UserBorrowedBooks from '../../user-borrowed-books/model/index.js';
+import { BORROWED_BOOK_STATE_OVERDUE, BORROWED_BOOK_STATE_PENDING } from '../../user-borrowed-books/constants/states.js';
 
 const { UNPROCESSABLE_ENTITY, NOT_FOUND } = httpStatus;
 
@@ -130,9 +133,23 @@ export const UsersService = {
       });
     }
 
-    // TODO: Prevent User deletion if he still has books borrowed
-    // TODO: if user doesn't have books but still have history then the history
-    // TODO: should be removed (VIA on delete cascade index)
+    const userHasBorrowedBooks = await UserBorrowedBooks.findOne({
+      where: {
+        userId,
+        borrowState: {
+          [Op.or]: [BORROWED_BOOK_STATE_PENDING, BORROWED_BOOK_STATE_OVERDUE],
+        },
+      },
+    });
+
+    if (!_.isNil(userHasBorrowedBooks)) {
+      throw new CustomAPIError({
+        message: 'User has non returned books',
+        status: UNPROCESSABLE_ENTITY,
+        errorCode: USER_HAS_BOOK,
+      });
+    }
+
     await Users.destroy({ where: { id: userId } });
   },
 
