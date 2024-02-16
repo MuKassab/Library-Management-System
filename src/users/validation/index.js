@@ -61,9 +61,37 @@ export const UsersValidation = {
       limit: PaginationLimitSchema,
       skip: PaginationSkipSchema,
 
-      // TODO: Add boolean to select user that have books borrowed now
-
+      // TODO: Add boolean to select only users that have books borrowed now
       // TODO: Add fuzzy search
+    },
+  },
+
+  borrowBook: {
+    params: {
+      id: Joi.number().integer().min(1).required(),
+      bookId: Joi.number().integer().min(1).required(),
+    },
+
+    body: {
+      returnDate: Joi.date().iso().greater('now').required(),
+    },
+  },
+
+  returnBook: {
+    params: {
+      id: Joi.number().integer().min(1).required(),
+      bookId: Joi.number().integer().min(1).required(),
+    },
+  },
+
+  listUserBorrowedBooks: {
+    params: {
+      id: Joi.number().integer().min(1).required(),
+    },
+
+    query: {
+      limit: PaginationLimitSchema,
+      skip: PaginationSkipSchema,
     },
   },
 };
