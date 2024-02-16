@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import httpStatus from 'http-status';
-
+import jwt from 'jsonwebtoken';
 import { Op } from 'sequelize';
+
 import Users from '../model/index.js';
 import { CustomAPIError } from '../../common/lib/index.js';
 import { EMAIL_IS_USED, USER_HAS_BOOK, USER_NOT_FOUND } from '../../common/constants/index.js';
-import { hashData } from '../../common/utils/index.js';
+import { compareHashedData, hashData } from '../../common/utils/index.js';
 import { USER_TYPE_CUSTOMER } from '../constants/states.js';
 import UserBorrowedBooks from '../../user-borrowed-books/model/index.js';
 import { BORROWED_BOOK_STATE_OVERDUE, BORROWED_BOOK_STATE_PENDING } from '../../user-borrowed-books/constants/states.js';
+import { config } from '../../common/config/env-variables.js';
 
 const { UNPROCESSABLE_ENTITY, NOT_FOUND } = httpStatus;
 
@@ -52,6 +54,59 @@ export const UsersService = {
     delete user.password;
 
     return user;
+  },
+
+  /**
+   * Authenticates users and return shortTermJwt, longTermJwt
+   *
+   * @param {Object} args
+   * @param {String} [args.password]
+   * @param {String} [args.email]
+   *
+   * @returns {Promise<{Object}>} {user: {...user}}
+   */
+  async authenticateUser({ password, email }) {
+    // validate no user exits with the same email before
+    const user = await Users.findOne({
+      where: { email },
+      attributes: ['id', 'password'],
+    });
+
+    if (_.isNil(user)) {
+      throw new CustomAPIError({
+        message: 'Invalid email or password',
+        status: UNPROCESSABLE_ENTITY,
+        errorCode: USER_NOT_FOUND,
+      });
+    }
+
+    const isCorrectPassword = await compareHashedData({ data: password, hashedData: user.password });
+
+    // throw the same error to enhance security
+    if (!isCorrectPassword) {
+      throw new CustomAPIError({
+        message: 'Invalid email or password',
+        status: UNPROCESSABLE_ENTITY,
+        errorCode: USER_NOT_FOUND,
+      });
+    }
+
+    // valid for 2 minutes
+    const shortTermJwt = jwt.sign(
+      { id: user.id, username: user.username },
+      config.JWT_SECRET,
+      { expiresIn: 120 },
+    );
+
+    // valid for 24 hours
+    const longTermJwt = jwt.sign(
+      { id: user.id, username: user.username },
+      config.JWT_SECRET,
+      { expiresIn: 24 * 60 * 60 },
+    );
+
+
+    return { shortTermJwt, longTermJwt };
   },
 
   /**
