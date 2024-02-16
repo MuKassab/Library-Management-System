@@ -4,6 +4,7 @@ import {
   AUTHORS_TAG,
   BOOKS_TAG,
   USERS_TAG,
+  USER_BORROWED_BOOKS_TAG,
 } from './tags.js';
 
 const index = {
@@ -31,6 +32,10 @@ const index = {
     {
       name: BOOKS_TAG,
       description: 'Books Endpoints',
+    },
+    {
+      name: USER_BORROWED_BOOKS_TAG,
+      description: 'User Borrowed Books Endpoints',
     },
   ],
 
