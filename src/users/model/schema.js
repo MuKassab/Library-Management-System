@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import { USER_TYPE_CUSTOMER, USER_TYPE_STAFF } from '../constants/states.js';
 import { EMAIL_REGEX, NAME_REGEX } from '../../common/constants/regex-patterns.js';
 
+// registrationDate key is tracked by Sequelize.createdAt but renamed to registrationDate
 export const UsersSchema = {
   id: {
     primaryKey: true,

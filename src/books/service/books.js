@@ -8,6 +8,7 @@ import {
   AUTHOR_NOT_FOUND,
   BOOK_EXISTS,
   BOOK_NOT_FOUND,
+  SORT_DIRECTION_ASCENDING,
 } from '../../common/constants/index.js';
 import Authors from '../../authors/model/index.js';
 
@@ -65,7 +66,7 @@ export const BooksService = {
       shelfLocation,
     });
 
-    return book.toJSON();
+    return book;
   },
 
   /**
@@ -157,7 +158,7 @@ export const BooksService = {
     // This promise must be done after the update to get the updated user row
     const updatedAuthor = await Books.findByPk(bookId);
 
-    return updatedAuthor.toJSON();
+    return updatedAuthor;
   },
 
   /**
@@ -191,11 +192,16 @@ export const BooksService = {
    * @param {Number} [args.limit]
    * @param {Number} [args.skip]
    * @param {String} [args.fuzzySearch]
+   * @param {String} [args.sortBy]
+   * @param {String} [args.sortDirection]
    *
    * @returns {Promise<{[Object]}>} {books: [{...bookData}], count}
    */
-  async listBooks({ limit, skip, fuzzySearch }) {
+  async listBooks({ limit, skip, fuzzySearch, sortBy, sortDirection }) {
     let queryObject = {};
+
+    const sortField = sortBy || 'id';
+    const querySortDirection = sortDirection === SORT_DIRECTION_ASCENDING ? 'ASC' : 'DESC';
 
     if (!_.isNil(fuzzySearch)) {
       queryObject = {
@@ -211,12 +217,12 @@ export const BooksService = {
       };
     }
 
-    const { count, rows: authors } = await Books.findAndCountAll({
+    const { count, rows: books } = await Books.findAndCountAll({
       where: queryObject,
       limit,
       offset: skip,
       // sort the authors by id as there db does not select data in the same order every time
-      order: [['id', 'ASC']],
+      order: [[sortField, querySortDirection]],
       // Include authors names (required for fuzzy search + better response)
       include: [{
         model: Authors,
@@ -224,7 +230,6 @@ export const BooksService = {
       }],
     });
 
-
-    return { authors, count };
+    return { books, count };
   },
 };

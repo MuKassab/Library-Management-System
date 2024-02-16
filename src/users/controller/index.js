@@ -1,5 +1,6 @@
 import httpStatus from 'http-status';
 import { UsersService } from '../service/users.js';
+import { UserBooksService } from '../service/books.js';
 
 const { CREATED, OK, NO_CONTENT } = httpStatus;
 
@@ -60,6 +61,50 @@ export const UsersController = {
       const { query } = req;
 
       const data = await UsersService.listUsers({ ...query });
+
+      return res.status(OK).json(data);
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async borrowBook(req, res, next) {
+    try {
+      const {
+        params: { id: userId, bookId },
+        body: { returnDate },
+      } = req;
+
+      const userBorrowedBook = await UserBooksService.borrowBook({ userId, bookId, returnDate });
+
+      return res.status(OK).json({ userBorrowedBook });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async returnBook(req, res, next) {
+    try {
+      const {
+        params: { id: userId, bookId },
+      } = req;
+
+      const userBorrowedBook = await UserBooksService.returnBook({ userId, bookId });
+
+      return res.status(OK).json({ userBorrowedBook });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async listUserBorrowedBooks(req, res, next) {
+    try {
+      const {
+        params: { id: userId },
+        query,
+      } = req;
+
+      const data = await UserBooksService.listUserBorrowedBooks({ userId, ...query });
 
       return res.status(OK).json(data);
     } catch (err) {

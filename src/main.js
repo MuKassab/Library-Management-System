@@ -1,5 +1,6 @@
 import { config } from './common/config/index.js';
 import { sequelize } from './common/database/index.js';
+import { cronjobs } from './jobs.js';
 import { initHttpServer } from './server.js';
 
 // Start server only when database is working as expected
@@ -9,6 +10,9 @@ sequelize.authenticate().then(async () => {
 
   // create missing tables in database if any
   await sequelize.sync();
+
+  // start cronjob
+  cronjobs.forEach(cronjob => cronjob.start());
 
   // Initialize and run server
   const server = initHttpServer();

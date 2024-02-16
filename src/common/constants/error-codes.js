@@ -12,3 +12,8 @@ export const INVALID_DEATH_DATE = '@errors/invalid-death-date';
 export const BOOK_EXISTS = '@errors/book-exists';
 export const BOOK_NOT_FOUND = '@errors/book-not-found';
 export const INVALID_ISBN = '@errors/invalid-ISBN';
+
+export const USER_HAS_BOOK = '@errors/user-has-book';
+export const USER_DOES_NOT_HAVE_BOOK = '@errors/user-does-not-have-book';
+export const INVALID_RETURN_DATE = '@errors/invalid-death-date';
+export const BOOK_NOT_AVAILABLE = '@errors/book-not-available';
