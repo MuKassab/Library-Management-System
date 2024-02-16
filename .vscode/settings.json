@@ -2,8 +2,10 @@
   "files.eol": "\n",
   "cSpell.words": [
     "DATEONLY",
+    "dockerized",
     "hstore",
     "openapi",
+    "papaparse",
     "parens",
     "subquery",
     "trgm",

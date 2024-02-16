@@ -1,0 +1,509 @@
+{
+    "info": {
+        "_postman_id": "7bb76305-6eb3-4463-899f-7e936c2960b9",
+        "name": "Library",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "users",
+            "item": [
+                {
+                    "name": "Register User",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/register",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "register"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"John_doe2@domain.com\",\n  \"password\": \"password\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/33",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "33"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"Muhammad Mostafa Kassab\",\n  \"password\": \"wa2wa2\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Delete User",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/3",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "3"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "List Users (Paginated)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "Get User",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/32",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "32"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "Borrow Book",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/1/books/4/borrow",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "1",
+                                "books",
+                                "4",
+                                "borrow"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"returnDate\": \"2024-02-20\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Return Book",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/1/books/4/return",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "1",
+                                "books",
+                                "4",
+                                "return"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"returnDate\": \"2024-02-20\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "List Borrowed Books",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/1/books?limit=5&skip=3",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5"
+                                },
+                                {
+                                    "key": "skip",
+                                    "value": "3"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "1",
+                                "books"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "Login user",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/users/login",
+                            "path": [
+                                "api",
+                                "v0",
+                                "users",
+                                "login"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"email\": \"John_doe2@domain.com\",\n  \"password\": \"password\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "authors",
+            "item": [
+                {
+                    "name": "Add Author",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/authors",
+                            "path": [
+                                "api",
+                                "v0",
+                                "authors"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"John Doe\",\n  \"nationality\": \"Irish\",\n  \"biography\": \"He Lived a nice life\",\n  \"birthDate\": \"1960-10-01\",\n  \"deathDate\": \"2010-10-07\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Author",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/authors/8",
+                            "path": [
+                                "api",
+                                "v0",
+                                "authors",
+                                "8"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "List Authors (Paginated)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/authors/",
+                            "path": [
+                                "api",
+                                "v0",
+                                "authors"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "Update Author",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/authors/7",
+                            "path": [
+                                "api",
+                                "v0",
+                                "authors",
+                                "7"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"name\": \"FuzzySearch\",\n  \"nationality\": \"Egyptian\",\n  \"biography\": \"La La X La La\",\n  \"birthDate\": \"2010-08-03\",\n  \"deathDate\": \"2010-08-04\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "books",
+            "item": [
+                {
+                    "name": "Add Book",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/books",
+                            "path": [
+                                "api",
+                                "v0",
+                                "books"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"title\": \"The Journey of Life\",\n  \"authorId\": \"8\",\n  \"ISBN\": \"978-1-4028-9462-6\",\n  \"totalQuantity\": \"15\",\n  \"shelfLocation\": \"AB 21 C\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Update book",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/books/1",
+                            "path": [
+                                "api",
+                                "v0",
+                                "books",
+                                "1"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            },
+                            "raw": "{\n  \"title\": \"FuzzySearch\",\n  \"authorId\": \"4\",\n  \"ISBN\": \"978-1-4028-9462-6\",\n  \"totalQuantity\": \"60\",\n  \"shelfLocation\": \"AB 21 C\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Book",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/books/7",
+                            "path": [
+                                "api",
+                                "v0",
+                                "books",
+                                "7"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "List Books (Paginated)",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/books?sortBy=borrowedCount",
+                            "query": [
+                                {
+                                    "key": "sortBy",
+                                    "value": "borrowedCount"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "api",
+                                "v0",
+                                "books"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "user borrowed books",
+            "item": [
+                {
+                    "name": "List Overdue Books",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/user-borrowed-books/overdue",
+                            "path": [
+                                "api",
+                                "v0",
+                                "user-borrowed-books",
+                                "overdue"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        }
+                    }
+                },
+                {
+                    "name": "Export Books CSV",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "localhost:3500/api/v0/user-borrowed-books/csv?borrowState=@borrowed-book/state/returned",
+                            "query": [
+                                {
+                                    "key": "borrowState",
+                                    "value": "@borrowed-book/state/returned"
+                                }
+                            ],
+                            "variable": [],
+                            "path": [
+                                "api",
+                                "v0",
+                                "user-borrowed-books",
+                                "csv"
+                            ],
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "3500"
+                        },
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYsImlhdCI6MTcwODExMDUxMiwiZXhwIjoxNzA4MTk2OTEyfQ.v2qVEnsF28X7HXU4SfIeSwBl_alqJvpjx0qJJKsE0FM",
+                                    "type": "string"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
