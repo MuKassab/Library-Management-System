@@ -8,3 +8,7 @@ export const AUTHOR_EXISTS = '@errors/author-exists';
 export const AUTHOR_NOT_FOUND = '@errors/author-not-found';
 export const INVALID_BIRTH_DATE = '@errors/invalid-birth-date';
 export const INVALID_DEATH_DATE = '@errors/invalid-death-date';
+
+export const BOOK_EXISTS = '@errors/book-exists';
+export const BOOK_NOT_FOUND = '@errors/book-not-found';
+export const INVALID_ISBN = '@errors/invalid-ISBN';
