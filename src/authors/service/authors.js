@@ -69,7 +69,6 @@ export const AuthorsService = {
   async updateAuthor({
     authorId, name, nationality, biography, birthDate, deathDate,
   }) {
-    // validate no user exits with the same email before
     const author = await Authors.findByPk(authorId, { attributes: ['id', 'birthDate', 'deathDate'] });
 
     if (_.isNil(author)) {
@@ -158,7 +157,6 @@ export const AuthorsService = {
    * @returns {Promise<>}
    */
   async deleteAuthor({ authorId }) {
-    // validate no user exits with the same email before
     const authorExists = await Authors.findByPk(authorId, { attributes: ['id'] });
 
     if (_.isNil(authorExists)) {
