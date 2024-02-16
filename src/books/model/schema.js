@@ -74,6 +74,7 @@ export const BooksSchema = {
     notEmpty: true,
   },
 
+  // This tracks how many time the book was borrowed (popularity)
   borrowedCount: {
     type: DataTypes.INTEGER,
     allowNull: false,

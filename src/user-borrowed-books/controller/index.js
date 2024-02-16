@@ -15,4 +15,16 @@ export const UserBorrowedBooksController = {
       return next(err);
     }
   },
+
+  async exportBorrowedBooks(req, res, next) {
+    try {
+      const { query } = req;
+
+      const csv = await UserBorrowedBooksService.exportBorrowedBooks({ ...query });
+
+      return res.status(OK).send({ csv });
+    } catch (err) {
+      return next(err);
+    }
+  },
 };

@@ -12,4 +12,10 @@ router.get(
   UserBorrowedBooksController.listOverdueBooks,
 );
 
+router.get(
+  '/csv',
+  validate(UserBorrowedBooksValidation.exportBorrowedBooks),
+  UserBorrowedBooksController.exportBorrowedBooks,
+);
+
 export default router;

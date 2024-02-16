@@ -194,7 +194,13 @@ export const UserBooksService = {
       await Promise.all([
         // Update book data (return the book to available quantity)
         book.increment({ availableQuantity: 1 }, { transaction: dbTransaction }),
-        userBorrowedBook.update({ borrowState: BORROWED_BOOK_STATE_RETURNED }, { transaction: dbTransaction }),
+        userBorrowedBook.update(
+          {
+            borrowState: BORROWED_BOOK_STATE_RETURNED,
+            returnedDate: new Date(),
+          },
+          { transaction: dbTransaction },
+        ),
       ]);
 
       await dbTransaction.commit();
