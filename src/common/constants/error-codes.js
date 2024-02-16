@@ -13,6 +13,8 @@ export const INVALID_DEATH_DATE = '@errors/invalid-death-date';
 export const BOOK_EXISTS = '@errors/book-exists';
 export const BOOK_NOT_FOUND = '@errors/book-not-found';
 export const INVALID_ISBN = '@errors/invalid-ISBN';
+export const INVALID_BOOK_QUANTITY = '@errors/invalid-book-quantity';
+export const BOOK_IS_BORROWED = '@errors/book-is-borrowed';
 
 export const USER_HAS_BOOK = '@errors/user-has-book';
 export const USER_DOES_NOT_HAVE_BOOK = '@errors/user-does-not-have-book';
