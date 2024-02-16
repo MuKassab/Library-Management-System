@@ -7,6 +7,8 @@ import { USERS_TAG } from '../../tags.js';
 import { PaginationLimitParameter, PaginationSkipParameter } from '../common/parameters.js';
 import { BookIdParameter, UserIdParameter } from './parameters.js';
 import {
+  AuthenticateUserRequestSchema,
+  AuthenticateUserResponseSchema,
   BorrowBookRequestSchema,
   BorrowBookResponseSchema,
   ListUserBorrowedBooksResponseSchema,
@@ -53,6 +55,50 @@ const UsersDocs = {
         422: {
           description: `
           - E-mail is already used, errorCode: ${EMAIL_IS_USED}
+          `,
+        },
+      },
+    },
+  },
+
+  '/v0/users/login': {
+    post: {
+      tags: [USERS_TAG],
+      summary: 'Authenticates user',
+      description: `
+      ### Notes:
+        - The short term and long term are only for testing purposes 
+        - Short term => valid for 2 minutes only
+        - Long term => valid for 1 day
+      `,
+
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: AuthenticateUserRequestSchema,
+          },
+        },
+      },
+
+      responses: {
+        200: {
+          description: 'User Authenticated successfully',
+          content: {
+            'application/json': {
+              schema: AuthenticateUserResponseSchema,
+            },
+          },
+        },
+
+        400: {
+          description: `
+          - Bad payload, errorCode: ${DATA_VALIDATION_FAILED}
+          `,
+        },
+
+        422: {
+          description: `
+          - Invalid email or password, errorCode: ${USER_NOT_FOUND}
           `,
         },
       },
