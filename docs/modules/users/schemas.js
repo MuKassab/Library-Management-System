@@ -53,6 +53,34 @@ export const RegisterNewUserResponseSchema = {
   },
 };
 
+export const AuthenticateUserRequestSchema = {
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      example: 'John_doe@domain.com',
+    },
+    password: {
+      type: 'string',
+      example: 'password',
+    },
+  },
+};
+
+export const AuthenticateUserResponseSchema = {
+  type: 'object',
+  properties: {
+    shortTermJwt: {
+      type: 'string',
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYsImlhdCI6MTcwODExMDUxMiwiZXhwIjoxNzA4MTEwNjMyfQ.HpsqnUIerhapW9hfHu2Da1ccJ6IKfpcy4XOqfXlH8cE',
+    },
+    longTermJwt: {
+      type: 'string',
+      example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYsImlhdCI6MTcwODExMDUxMiwiZXhwIjoxNzA4MTk2OTEyfQ.v2qVEnsF28X7HXU4SfIeSwBl_alqJvpjx0qJJKsE0FM',
+    },
+  },
+};
+
 export const ListUsersResponseSchema = {
   type: 'object',
   properties: {

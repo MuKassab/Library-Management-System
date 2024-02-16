@@ -12,6 +12,12 @@ router.post(
   UsersController.registerUser,
 );
 
+router.post(
+  '/login',
+  validate(UsersValidation.authenticateUser),
+  UsersController.authenticateUser,
+);
+
 router.patch(
   '/:id',
   validate(UsersValidation.updateUser),

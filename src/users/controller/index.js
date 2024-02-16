@@ -17,6 +17,18 @@ export const UsersController = {
     }
   },
 
+  async authenticateUser(req, res, next) {
+    try {
+      const { body } = req;
+
+      const data = await UsersService.authenticateUser({ ...body });
+
+      return res.status(OK).json(data);
+    } catch (err) {
+      return next(err);
+    }
+  },
+
   async updateUser(req, res, next) {
     try {
       const {

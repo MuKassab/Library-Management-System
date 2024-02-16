@@ -23,6 +23,20 @@ export const UsersValidation = {
     },
   },
 
+  authenticateUser: {
+    body: {
+      email: Joi.string()
+        .pattern(EMAIL_REGEX)
+        .required(),
+
+      password: Joi.string()
+        .min(3)
+        .max(50)
+        .pattern(PASSWORD_REGEX)
+        .required(),
+    },
+  },
+
   updateUser: {
     params: {
       id: Joi.number().integer().min(1).required(),

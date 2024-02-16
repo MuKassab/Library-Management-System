@@ -41,23 +41,21 @@ const index = {
 
   paths: endpointDefinitions,
 
-  // TODO: the following lines should be uncommented when authentication is implemented
-  // components: {
-  //   securitySchemes: {
-  //     jwtAuth: {
-  //       type: 'apiKey',
-  //       in: 'header',
-  //       name: 'Authorization',
-  //     },
-  //   },
-  // },
+  components: {
+    securitySchemes: {
+      jwtAuth: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'Authorization',
+      },
+    },
+  },
 
-  // security: [
-  //   {
-  //     jwtAuth: [],
-  //   },
-  // ],
-
+  security: [
+    {
+      jwtAuth: [],
+    },
+  ],
 };
 
 export default index;

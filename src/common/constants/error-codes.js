@@ -20,3 +20,6 @@ export const USER_HAS_BOOK = '@errors/user-has-book';
 export const USER_DOES_NOT_HAVE_BOOK = '@errors/user-does-not-have-book';
 export const INVALID_RETURN_DATE = '@errors/invalid-return-date';
 export const BOOK_NOT_AVAILABLE = '@errors/book-not-available';
+
+export const JWT_EXPIRED = '@errors/jwt-expired';
+export const USER_NOT_AUTHENTICATED = '@errors/user-not-authenticated';
