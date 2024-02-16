@@ -9,4 +9,6 @@ export const config = {
   REDIS_URI: process.env.REDIS_URI,
 
   HASH_PEPPER: process.env.HASH_PEPPER,
+
+  JWT_SECRET: process.env.JWT_SECRET,
 };
