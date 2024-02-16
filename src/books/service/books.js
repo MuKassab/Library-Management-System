@@ -7,10 +7,14 @@ import { CustomAPIError } from '../../common/lib/index.js';
 import {
   AUTHOR_NOT_FOUND,
   BOOK_EXISTS,
+  BOOK_IS_BORROWED,
   BOOK_NOT_FOUND,
+  INVALID_BOOK_QUANTITY,
   SORT_DIRECTION_ASCENDING,
 } from '../../common/constants/index.js';
 import Authors from '../../authors/model/index.js';
+import UserBorrowedBooks from '../../user-borrowed-books/model/index.js';
+import { BORROWED_BOOK_STATE_OVERDUE, BORROWED_BOOK_STATE_PENDING } from '../../user-borrowed-books/constants/states.js';
 
 const { UNPROCESSABLE_ENTITY, NOT_FOUND } = httpStatus;
 
@@ -142,10 +146,21 @@ export const BooksService = {
       updateObject.ISBN = ISBN;
     }
 
+    // TODO: this service should be locked to handle race conditions on the available quantity field
+    // TODO: for example a user can return a book at the same time is happening
     if (!_.isNil(totalQuantity)) {
-      // FIXME: this should be fixed to validate that the number is at least greater than the number of books borrowed
+      const currentBorrowedQuantity = book.totalQuantity - book.availableQuantity;
+      if (totalQuantity < currentBorrowedQuantity) {
+        throw new CustomAPIError({
+          message: 'Book borrowed quantity can\'t be larger than total quantity',
+          status: UNPROCESSABLE_ENTITY,
+          errorCode: INVALID_BOOK_QUANTITY,
+          meta: { currentBorrowedQuantity },
+        });
+      }
+
       updateObject.totalQuantity = totalQuantity;
-      updateObject.availableQuantity = totalQuantity;
+      updateObject.availableQuantity = totalQuantity - currentBorrowedQuantity;
     }
 
     if (!_.isNil(shelfLocation)) {
@@ -181,7 +196,23 @@ export const BooksService = {
       });
     }
 
-    // TODO: Prevent book deletion if it's borrowed
+    const activeBookBorrowing = await UserBorrowedBooks.findOne({
+      where: {
+        bookId,
+        borrowState: {
+          [Op.or]: [BORROWED_BOOK_STATE_PENDING, BORROWED_BOOK_STATE_OVERDUE],
+        },
+      },
+    });
+
+    if (!_.isNil(activeBookBorrowing)) {
+      throw new CustomAPIError({
+        message: 'Book is currently borrowed by users',
+        status: UNPROCESSABLE_ENTITY,
+        errorCode: BOOK_IS_BORROWED,
+      });
+    }
+
     await Books.destroy({ where: { id: bookId } });
   },
 

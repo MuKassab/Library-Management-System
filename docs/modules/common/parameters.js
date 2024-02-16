@@ -29,9 +29,9 @@ export const PaginationSkipParameter = {
   description: 'Number of skipped rows',
 };
 
-export const SortingMethodParameter = {
+export const SortingDirectionParameter = {
   in: 'query',
-  name: 'sortingMethod',
+  name: 'sortDirection',
   schema: {
     type: 'String',
     default: SORT_DIRECTION_DESCENDING,

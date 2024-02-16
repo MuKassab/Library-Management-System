@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { PaginationLimitSchema, PaginationSkipSchema } from '../../common/validation/index.js';
 import { isValidISBN } from '../service/helpers/index.js';
 import { SORT_DIRECTION_ASCENDING, SORT_DIRECTION_DESCENDING } from '../../common/constants/pagination.js';
+import { SORT_BY_BORROWED_COUNT_KEY } from '../../common/constants/index.js';
 
 const joiIsValidISBN = (value, helpers) => {
   if (isValidISBN(value)) {
@@ -57,7 +58,7 @@ export const BooksValidation = {
 
       fuzzySearch: Joi.string(),
 
-      sortBy: Joi.string().valid('borrowedCount'),
+      sortBy: Joi.string().valid(SORT_BY_BORROWED_COUNT_KEY),
       sortDirection: Joi
         .string()
         .valid(SORT_DIRECTION_ASCENDING, SORT_DIRECTION_DESCENDING)
