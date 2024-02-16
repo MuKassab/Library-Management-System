@@ -21,6 +21,7 @@ export const BooksSchema = {
     unique: true,
   },
 
+  // The validation on this field is done by the foreign key restraints
   authorId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -71,5 +72,11 @@ export const BooksSchema = {
     type: DataTypes.STRING,
     allowNull: false,
     notEmpty: true,
+  },
+
+  borrowedCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
 };
