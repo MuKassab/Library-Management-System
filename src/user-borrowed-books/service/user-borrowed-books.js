@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Papa from 'papaparse';
 
+import _ from 'lodash';
 import { BORROWED_BOOK_STATE_OVERDUE, BORROWED_BOOK_STATE_PENDING } from '../constants/states.js';
 import UserBorrowedBooks from '../model/index.js';
 import { USER_BORROWED_BOOKS_MODEL_NAME, USER_BORROWED_BOOKS_TABLE_NAME } from '../model/constants.js';
@@ -102,8 +103,28 @@ export const UserBorrowedBooksService = {
     );
   },
 
-  async exportBorrowedBooks({ startDate, endDate }) {
-    // TODO: if this becomes a bottleneck then it should be converted to stream to fetch and parse data as they come
+  /**
+   *
+   * @param {Object} args
+   * @param {String} [args.startDate]
+   * @param {String} [args.endDate]
+   * @param {borrowState} [args.borrowState]
+   *
+   * @returns
+   *
+   * TODO: if this becomes a bottleneck then it should be converted to stream to fetch and parse data as they come
+   */
+  async exportBorrowedBooks({ startDate, endDate, borrowState }) {
+    const queryFilter = {
+      borrowedDate: {
+        [Op.between]: [startDate, endDate],
+      },
+    };
+
+    if (!_.isNil(borrowState)) {
+      queryFilter.borrowState = borrowState;
+    }
+
     const borrowedBooks = await UserBorrowedBooks.findAll({
       attributes: [
         [sequelize.col(`${USERS_MODEL_NAME}.name`), 'userName'],
@@ -123,11 +144,7 @@ export const UserBorrowedBooksService = {
           attributes: [],
         },
       ],
-      where: {
-        borrowedDate: {
-          [Op.between]: [startDate, endDate],
-        },
-      },
+      where: queryFilter,
     });
 
     // data must be formatted before being parsed to csv

@@ -3,7 +3,7 @@ import {
 } from '../../../src/common/constants/error-codes.js';
 import { USER_BORROWED_BOOKS_TAG } from '../../tags.js';
 import { PaginationLimitParameter, PaginationSkipParameter } from '../common/parameters.js';
-import { EndDateQueryParameter, StartDateQueryParameter } from './parameters.js';
+import { BorrowStateQueryParameter, EndDateQueryParameter, StartDateQueryParameter } from './parameters.js';
 import {
   ExportBorrowedBooksResponseSchema,
   ListOverdueBooksResponseSchema,
@@ -42,9 +42,13 @@ const UserBorrowedBooksDocs = {
   '/v0/user-borrowed-books/csv': {
     get: {
       tags: [USER_BORROWED_BOOKS_TAG],
-      summary: 'Exports borrowed books in specific period in csv format (To be formatted in Frontend)',
+      summary: 'Exports borrowed books in specific period in csv format',
+      description: `
+        - The data is expected to be formatted on frontend
+        - The data can be filtered by dates and borrow state
+      `,
 
-      parameters: [StartDateQueryParameter, EndDateQueryParameter],
+      parameters: [StartDateQueryParameter, EndDateQueryParameter, BorrowStateQueryParameter],
 
       responses: {
         200: {
