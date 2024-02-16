@@ -2,6 +2,7 @@ import endpointDefinitions from './modules/index.js';
 
 import {
   AUTHORS_TAG,
+  BOOKS_TAG,
   USERS_TAG,
 } from './tags.js';
 
@@ -27,10 +28,15 @@ const index = {
       name: AUTHORS_TAG,
       description: 'Authors Endpoints',
     },
+    {
+      name: BOOKS_TAG,
+      description: 'Books Endpoints',
+    },
   ],
 
   paths: endpointDefinitions,
 
+  // TODO: the following lines should be uncommented when authentication is implemented
   // components: {
   //   securitySchemes: {
   //     jwtAuth: {
