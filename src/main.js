@@ -1,10 +1,17 @@
 import { config } from './common/config/index.js';
 import { sequelize } from './common/database/index.js';
+import { setupPassport } from './common/lib/passport.js';
+import { getRedisClient } from './common/lib/redis.js';
 import { cronjobs } from './jobs.js';
-import { initHttpServer } from './server.js';
+import { getHTTPServer } from './server.js';
 
 // Start server only when database is working as expected
 sequelize.authenticate().then(async () => {
+  setupPassport();
+
+  // ensure redis is up and running
+  getRedisClient();
+
   // enable trgm(trigrams) extension to allow trgm indexes for text search
   await sequelize.query('CREATE EXTENSION IF NOT EXISTS pg_trgm;');
 
@@ -15,7 +22,7 @@ sequelize.authenticate().then(async () => {
   cronjobs.forEach(cronjob => cronjob.start());
 
   // Initialize and run server
-  const server = initHttpServer();
+  const server = getHTTPServer();
   server.listen(config.PORT);
 }).catch(err => {
   // eslint-disable-next-line no-console
