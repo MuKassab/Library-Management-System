@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { validate } from '../../common/middlewares/validation.js';
+import { apiRateLimiter, validate } from '../../common/middlewares/index.js';
 import { UsersValidation } from '../validation/index.js';
 import { UsersController } from '../controller/index.js';
 
@@ -14,6 +14,7 @@ router.post(
 
 router.post(
   '/login',
+  apiRateLimiter,
   validate(UsersValidation.authenticateUser),
   UsersController.authenticateUser,
 );

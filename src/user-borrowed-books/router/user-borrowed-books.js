@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { validate, authenticate } from '../../common/middlewares/index.js';
+import { validate, authenticate, apiRateLimiter } from '../../common/middlewares/index.js';
 import { UserBorrowedBooksValidation } from '../validation/index.js';
 import { UserBorrowedBooksController } from '../controller/index.js';
 
@@ -15,6 +15,7 @@ router.get(
 router.get(
   '/csv',
   authenticate,
+  apiRateLimiter,
   validate(UserBorrowedBooksValidation.exportBorrowedBooks),
   UserBorrowedBooksController.exportBorrowedBooks,
 );
