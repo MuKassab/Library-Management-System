@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: .Dockerfile
+
+    user: node:node
+
+    env_file: .env
+    container_name: library-management-system
+    
+    volumes:
+      - ./:/home/node/app
+
+    environment:
+      PORT: 3500
+
+    ports:
+      - "3500:3500"
+    depends_on:
+      - redis
+      - postgres
+
+  redis:
+    image: "redis:6.0-alpine"
+    container_name: library-management-system-redis
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: "postgres:14.5-alpine"
+    environment:
+      POSTGRES_DB: library_management_system
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: someStrongPassword
+    container_name: library-management-system-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - library-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  library-postgres-data:
