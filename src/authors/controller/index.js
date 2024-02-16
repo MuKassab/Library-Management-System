@@ -10,7 +10,7 @@ export const AuthorsController = {
 
       const author = await AuthorsService.addAuthor({ ...body });
 
-      return res.status(CREATED).json({ user: author });
+      return res.status(CREATED).json({ author });
     } catch (err) {
       return next(err);
     }
@@ -25,7 +25,7 @@ export const AuthorsController = {
 
       const author = await AuthorsService.updateAuthor({ authorId, ...body });
 
-      return res.status(OK).json({ user: author });
+      return res.status(OK).json({ author });
     } catch (err) {
       return next(err);
     }
