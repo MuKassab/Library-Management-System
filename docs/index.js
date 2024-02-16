@@ -1,6 +1,7 @@
 import endpointDefinitions from './modules/index.js';
 
 import {
+  AUTHORS_TAG,
   USERS_TAG,
 } from './tags.js';
 
@@ -21,6 +22,10 @@ const index = {
     {
       name: USERS_TAG,
       description: 'Users Endpoints',
+    },
+    {
+      name: AUTHORS_TAG,
+      description: 'Authors Endpoints',
     },
   ],
 

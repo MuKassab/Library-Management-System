@@ -6,11 +6,13 @@ import Authors from '../model/index.js';
 import { CustomAPIError } from '../../common/lib/index.js';
 import {
   AUTHOR_EXISTS,
+  AUTHOR_HAS_BOOKS,
   AUTHOR_NOT_FOUND,
   INVALID_BIRTH_DATE,
   INVALID_DEATH_DATE,
 } from '../../common/constants/index.js';
 import { compareDates } from '../../common/utils/index.js';
+import Books from '../../books/model/index.js';
 
 const { UNPROCESSABLE_ENTITY, NOT_FOUND } = httpStatus;
 
@@ -50,7 +52,7 @@ export const AuthorsService = {
       deathDate,
     });
 
-    return author.toJSON();
+    return author;
   },
 
   /**
@@ -145,7 +147,7 @@ export const AuthorsService = {
     // This promise must be done after the update to get the updated user row
     const updatedAuthor = await Authors.findByPk(authorId);
 
-    return updatedAuthor.toJSON();
+    return updatedAuthor;
   },
 
   /**
@@ -167,7 +169,20 @@ export const AuthorsService = {
       });
     }
 
-    // TODO: Prevent Author deletion if he has books tied to him
+    const authorHasBooks = await Books.findOne({
+      where: {
+        authorId,
+      },
+    });
+
+    if (!_.isNil(authorHasBooks)) {
+      throw new CustomAPIError({
+        message: 'Author is related to books',
+        status: UNPROCESSABLE_ENTITY,
+        errorCode: AUTHOR_HAS_BOOKS,
+      });
+    }
+
     await Authors.destroy({ where: { id: authorId } });
   },
 
