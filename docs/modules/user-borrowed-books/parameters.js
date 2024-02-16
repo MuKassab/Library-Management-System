@@ -1,3 +1,5 @@
+import { BORROWED_BOOK_STATES } from '../../../src/user-borrowed-books/constants/states.js';
+
 export const StartDateQueryParameter = {
   in: 'query',
   name: 'startDate',
@@ -16,4 +18,14 @@ export const EndDateQueryParameter = {
     format: 'date',
   },
   description: 'end date to export data (default is now)',
+};
+
+export const BorrowStateQueryParameter = {
+  in: 'query',
+  name: 'borrowState',
+  schema: {
+    type: 'String',
+    enum: BORROWED_BOOK_STATES,
+  },
+  description: 'Filter data by state',
 };
