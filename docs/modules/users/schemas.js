@@ -216,6 +216,11 @@ export const ReturnBookResponseSchema = {
           format: 'date',
           example: '2024-02-16',
         },
+        returnedDate: {
+          type: 'string',
+          format: 'date',
+          example: '2024-02-18',
+        },
         returnDate: {
           type: 'string',
           format: 'date',

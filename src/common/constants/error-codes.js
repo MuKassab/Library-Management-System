@@ -23,3 +23,5 @@ export const BOOK_NOT_AVAILABLE = '@errors/book-not-available';
 
 export const JWT_EXPIRED = '@errors/jwt-expired';
 export const USER_NOT_AUTHENTICATED = '@errors/user-not-authenticated';
+
+export const RATE_LIMIT_EXCEEDED = '@errors/rate-limit-exceeded';

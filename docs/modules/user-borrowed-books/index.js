@@ -1,5 +1,5 @@
 import {
-  DATA_VALIDATION_FAILED,
+  DATA_VALIDATION_FAILED, JWT_EXPIRED, RATE_LIMIT_EXCEEDED, USER_NOT_AUTHENTICATED,
 } from '../../../src/common/constants/error-codes.js';
 import { USER_BORROWED_BOOKS_TAG } from '../../tags.js';
 import { PaginationLimitParameter, PaginationSkipParameter } from '../common/parameters.js';
@@ -60,9 +60,21 @@ const UserBorrowedBooksDocs = {
           },
         },
 
+        401: {
+          description: `
+          - Unauthorized, errorCode: ${JWT_EXPIRED} || ${USER_NOT_AUTHENTICATED}
+          `,
+        },
+
         400: {
           description: `
           - Bad payload, errorCode: ${DATA_VALIDATION_FAILED}
+          `,
+        },
+
+        429: {
+          description: `
+          - Rate limit exceeded, errorCode: ${RATE_LIMIT_EXCEEDED}
           `,
         },
       },
