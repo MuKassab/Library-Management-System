@@ -1,10 +1,14 @@
 import { Op } from 'sequelize';
+import Papa from 'papaparse';
+
 import { BORROWED_BOOK_STATE_OVERDUE, BORROWED_BOOK_STATE_PENDING } from '../constants/states.js';
 import UserBorrowedBooks from '../model/index.js';
 import { USER_BORROWED_BOOKS_MODEL_NAME, USER_BORROWED_BOOKS_TABLE_NAME } from '../model/constants.js';
 import { BOOKS_MODEL_NAME, BOOKS_TABLE_NAME } from '../../books/model/constants.js';
 import { sequelize } from '../../common/database/db.js';
 import Books from '../../books/model/index.js';
+import Users from '../../users/model/index.js';
+import { USERS_MODEL_NAME } from '../../users/model/constants.js';
 
 export const UserBorrowedBooksService = {
   /**
@@ -96,5 +100,42 @@ export const UserBorrowedBooksService = {
         },
       },
     );
+  },
+
+  async exportBorrowedBooks({ startDate, endDate }) {
+    // TODO: if this becomes a bottleneck then it should be converted to stream to fetch and parse data as they come
+    const borrowedBooks = await UserBorrowedBooks.findAll({
+      attributes: [
+        [sequelize.col(`${USERS_MODEL_NAME}.name`), 'userName'],
+        [sequelize.col('Book.title'), 'title'],
+        'borrowedDate',
+        'returnDate',
+        'returnedDate',
+        'borrowState',
+      ],
+      include: [
+        {
+          model: Users,
+          attributes: [],
+        },
+        {
+          model: Books,
+          attributes: [],
+        },
+      ],
+      where: {
+        borrowedDate: {
+          [Op.between]: [startDate, endDate],
+        },
+      },
+    });
+
+    // data must be formatted before being parsed to csv
+    const formattedBorrowedBooks = borrowedBooks.map(book => book.toJSON());
+
+    // Convert data to CSV format
+    const csv = Papa.unparse(formattedBorrowedBooks);
+
+    return csv;
   },
 };

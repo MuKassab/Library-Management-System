@@ -6,7 +6,8 @@
     "openapi",
     "parens",
     "subquery",
-    "trgm"
+    "trgm",
+    "unparse"
   ],
   "eslint.enable": true,
   "editor.tabSize": 2,

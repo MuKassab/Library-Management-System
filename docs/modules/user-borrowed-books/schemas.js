@@ -34,3 +34,13 @@ export const ListOverdueBooksResponseSchema = {
     },
   },
 };
+
+export const ExportBorrowedBooksResponseSchema = {
+  type: 'object',
+  properties: {
+    csv: {
+      type: 'string',
+      example: 'userName,title,borrowedDate,returnDate,returnedDate,borrowState\r\nJohn Doe,Fourth Added Book,2024-02-16,2024-02-20,2024-02-16,@borrowed-book/state/returned',
+    },
+  },
+};

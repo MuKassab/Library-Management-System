@@ -30,6 +30,11 @@ export const UserBorrowedBooksSchema = {
     allowNull: false,
   },
 
+  // The date at which the user actually returned the books
+  returnedDate: {
+    type: DataTypes.DATEONLY,
+  },
+
   borrowState: {
     type: DataTypes.ENUM,
     values: BORROWED_BOOK_STATES,
