@@ -3,7 +3,9 @@ import {
 } from '../../../src/common/constants/error-codes.js';
 import { USER_BORROWED_BOOKS_TAG } from '../../tags.js';
 import { PaginationLimitParameter, PaginationSkipParameter } from '../common/parameters.js';
+import { EndDateQueryParameter, StartDateQueryParameter } from './parameters.js';
 import {
+  ExportBorrowedBooksResponseSchema,
   ListOverdueBooksResponseSchema,
 } from './schemas.js';
 
@@ -24,6 +26,32 @@ const UserBorrowedBooksDocs = {
           content: {
             'application/json': {
               schema: ListOverdueBooksResponseSchema,
+            },
+          },
+        },
+
+        400: {
+          description: `
+          - Bad payload, errorCode: ${DATA_VALIDATION_FAILED}
+          `,
+        },
+      },
+    },
+  },
+
+  '/v0/user-borrowed-books/csv': {
+    get: {
+      tags: [USER_BORROWED_BOOKS_TAG],
+      summary: 'Exports borrowed books in specific period in csv format (To be formatted in Frontend)',
+
+      parameters: [StartDateQueryParameter, EndDateQueryParameter],
+
+      responses: {
+        200: {
+          description: 'CSV exported successfully',
+          content: {
+            'application/json': {
+              schema: ExportBorrowedBooksResponseSchema,
             },
           },
         },
