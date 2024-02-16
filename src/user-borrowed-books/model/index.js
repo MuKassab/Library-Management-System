@@ -27,13 +27,23 @@ const UserBorrowedBooks = sequelize.define(
   },
 );
 
-// Define Relation for this tables
+// Define Relation for this table
 UserBorrowedBooks.belongsTo(Users, {
   foreignKey: 'userId',
   onDelete: 'CASCADE',
 });
 
+Users.hasMany(UserBorrowedBooks, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE',
+});
+
 UserBorrowedBooks.belongsTo(Books, {
+  foreignKey: 'bookId',
+  onDelete: 'CASCADE',
+});
+
+Books.hasMany(UserBorrowedBooks, {
   foreignKey: 'bookId',
   onDelete: 'CASCADE',
 });
