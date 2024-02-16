@@ -63,7 +63,6 @@ export const UsersService = {
    * @returns {Promise<{Object}>} {user: {...user}}
    */
   async updateUser({ userId, name, password, email }) {
-    // validate no user exits with the same email before
     const userExists = await Users.findByPk(userId, { attributes: ['id'] });
 
     if (_.isNil(userExists)) {
@@ -121,7 +120,6 @@ export const UsersService = {
    * @returns {Promise<>}
    */
   async deleteUser({ userId }) {
-    // validate no user exits with the same email before
     const userExists = await Users.findByPk(userId, { attributes: ['id'] });
 
     if (_.isNil(userExists)) {
@@ -147,7 +145,6 @@ export const UsersService = {
    * @returns {Promise<{Object}>} {user: {...userData}}
    */
   async getUser({ userId }) {
-    // validate no user exits with the same email before
     const user = await Users.findByPk(userId, { attributes: { exclude: ['password'] } });
 
     if (_.isNil(user)) {
