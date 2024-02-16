@@ -1,7 +1,13 @@
 import {
   BOOK_NOT_AVAILABLE,
   BOOK_NOT_FOUND,
-  DATA_VALIDATION_FAILED, EMAIL_IS_USED, INVALID_RETURN_DATE, USER_DOES_NOT_HAVE_BOOK, USER_HAS_BOOK, USER_NOT_FOUND,
+  DATA_VALIDATION_FAILED,
+  EMAIL_IS_USED,
+  INVALID_RETURN_DATE,
+  RATE_LIMIT_EXCEEDED,
+  USER_DOES_NOT_HAVE_BOOK,
+  USER_HAS_BOOK,
+  USER_NOT_FOUND,
 } from '../../../src/common/constants/error-codes.js';
 import { USERS_TAG } from '../../tags.js';
 import { PaginationLimitParameter, PaginationSkipParameter } from '../common/parameters.js';
@@ -99,6 +105,12 @@ const UsersDocs = {
         422: {
           description: `
           - Invalid email or password, errorCode: ${USER_NOT_FOUND}
+          `,
+        },
+
+        429: {
+          description: `
+          - Rate limit exceeded, errorCode: ${RATE_LIMIT_EXCEEDED}
           `,
         },
       },
