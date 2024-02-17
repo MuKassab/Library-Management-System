@@ -127,7 +127,7 @@ export const AuthorsService = {
     }
 
     if (!_.isNil(deathDate)) {
-      const birthDateToCompareWith = birthDate || author.deathDate;
+      const birthDateToCompareWith = birthDate || author.birthDate;
 
       if (compareDates(deathDate, birthDateToCompareWith) !== 1) {
         throw new CustomAPIError({
