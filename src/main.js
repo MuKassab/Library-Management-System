@@ -5,6 +5,12 @@ import { getRedisClient } from './common/lib/redis.js';
 import { cronjobs } from './jobs.js';
 import { getHTTPServer } from './server.js';
 
+process.on(
+  'uncaughtException',
+  // eslint-disable-next-line no-console
+  err => console.error(err),
+);
+
 // Start server only when database is working as expected
 sequelize.authenticate().then(async () => {
   setupPassport();
